@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pointage des Travailleurs</title>
+  
+
+
+    <style>
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    font-size: 16px;
+}
+
+
+h2 {
+    font-weight: 600;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+select, button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+select:focus, button:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+select:hover, button:hover {
+    background-color: #357ab7;
+    color: white;
+    
+    border-color: #0056b3;
+}
+
+button {
+    background-color: #4a90e2;
+    color: white;
+    margin: 2px;
+    color: white;
+    padding: 12px;
+    font-size: 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: #ffffff 0.3s ease;
+    font-weight: bold;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+.summary {
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.summary span {
+    color: #007bff;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+}
+
+td {
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #333;
+}
+
+td input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+    font-size: 14px;
+}
+
+td input:hover {
+    border-color: #007bff;
+}
+
+td input:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+tr.selected {
+    background-color: #cfe2ff;
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    select, button, input[type="text"], input[type="number"] {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 12px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .summary {
+        font-size: 16px;
+    }
+}
+
+
+* {
+    transition: all 0.3s ease;
+}
+input.hoursInput {
+    background-color: yellow; /* اللون الأصفر للخلفية */
+    text-align: center; /* توسيط النص داخل الحقل */
+    font-size: 16px; /* حجم الخط */
+    font-weight: bold; /* جعل الخط عريض */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    transition: border-color 0.3s ease;
+}
+
+    </style>
+</head>
+<body>
+    <input type="text" id="finca" value="FINCA 20" style="display: none;">
+<h2>Liste des Groupes</h2>
+
+
+<select id="groupSelect">
+    <option value="">Sélectionnez un groupe</option>
+</select>
+
+
+<p class="summary">Travailleurs sélectionnés: <span id="selectedCount">0</span></p>
+
+
+<button onclick="toggleSelectAll()">Sélectionner/Désélectionner tout</button>
+<button onclick="saveData()">Envoyer</button>
+
+
+<table>
+    
+    <tbody id="memberTable"></tbody>
+</table>
+
+    <script>
+       let allSelected = false; 
+
+function toggleSelectAll() {
+    const checkboxes = document.querySelectorAll(".selectCheckbox");
+    allSelected = !allSelected; 
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = allSelected; 
+        updateRowSelection(checkbox.closest("tr"), allSelected); 
+    });
+
+    updateSelectedCount(); 
+}
+
+async function fetchGroups() {
+    const url = "https://script.google.com/macros/s/AKfycbylEffo1sUDfK4TjMT7zI9JPEoC90eblAZV5jwemk391QrM1JrdMiFD-10mxMxWrWBz2A/exec";
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        groupData = data;
+
+        const sortedGroups = Object.keys(data).sort();
+
+        const select = document.getElementById("groupSelect");
+        select.innerHTML = '<option value="">Sélectionnez un groupe</option>';
+        sortedGroups.forEach(group => {
+            const option = document.createElement("option");
+            option.value = group;
+            option.textContent = group;
+            select.appendChild(option);
+        });
+
+        select.addEventListener("change", function() {
+            selectedGroup = this.value;
+            displayMembers(selectedGroup);
+        });
+
+    } catch (error) {
+        console.error("Erreur de chargement :", error);
+        alert("Erreur lors de la récupération des données !");
+    }
+}
+
+
+function displayMembers(group) {
+    const members = groupData[group] || [];
+    
+
+    const sortedMembers = members.sort((a, b) => a.member.localeCompare(b.member));
+
+    const table = document.getElementById("memberTable");
+    table.innerHTML = "";
+    
+    sortedMembers.forEach(member => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td><input type="checkbox" class="selectCheckbox"></td>
+            <td>${member.code}</td>
+            <td class="clickable">${member.member}</td>
+            <td><input type="number" class="hoursInput" min="0" step="0.5" value="0" ></td>
+        `;
+
+        const checkbox = row.querySelector(".selectCheckbox");
+        const hoursInput = row.querySelector(".hoursInput");
+
+
+        row.querySelector(".clickable").addEventListener("click", () => {
+            checkbox.checked = !checkbox.checked;
+            updateRowSelection(row, checkbox.checked);
+        });
+
+
+        checkbox.addEventListener("change", () => {
+            updateRowSelection(row, checkbox.checked);
+        });
+        hoursInput.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+        table.appendChild(row);
+    });
+
+    updateSelectedCount();
+    
+}
+
+
+        function updateRowSelection(row, selected) {
+            const hoursInput = row.querySelector(".hoursInput");
+
+            if (selected) {
+                row.classList.add("selected");
+                if (hoursInput.value == 0) hoursInput.value = 8; 
+            } else {
+                row.classList.remove("selected");
+                hoursInput.value = 0; 
+            }
+
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const count = document.querySelectorAll(".selectCheckbox:checked").length;
+            document.getElementById("selectedCount").textContent = count;
+        }
+
+        
+
+
+
+
+        async function saveData() {
+            const rows = document.querySelectorAll("#memberTable tr");
+            const dataToSend = [];
+            
+            rows.forEach(row => {
+                const checkbox = row.querySelector(".selectCheckbox");
+                if (checkbox.checked) {
+                    const code = row.cells[1].textContent;
+                    const name = row.cells[2].textContent;
+                    const hours = row.querySelector(".hoursInput").value;
+                    const fin = document.getElementById("finca").value;
+                    dataToSend.push({ code, name, group: selectedGroup, hours, fin }); 
+                }
+            });
+
+            if (dataToSend.length === 0) {
+                alert("Aucun travailleur sélectionné !");
+                return;
+            }
+
+            const url = "https://script.google.com/macros/s/AKfycbylEffo1sUDfK4TjMT7zI9JPEoC90eblAZV5jwemk391QrM1JrdMiFD-10mxMxWrWBz2A/exec";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    mode: 'no-cors',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataToSend)
+                });
+                const result = await response.json();
+                alert("Données enregistrées avec succès !");
+            } catch (error) {
+                
+            }
+
+         
+            document.querySelectorAll(".selectCheckbox").forEach(checkbox => {
+                checkbox.checked = false;
+                updateRowSelection(checkbox.closest("tr"), false);
+            });
+        }
+
+        fetchGroups();
+    </script>
+
+</body>
+</html>
