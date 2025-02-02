@@ -175,7 +175,7 @@ tr.selected {
     .summary {
         display: flex;
         align-items: center;
-        gap: 10px; /* تباعد بين العناصر */
+        gap: 10px;
         font-size: 16px;
     }
 }
@@ -280,7 +280,7 @@ input.hoursInput {
 </table>
 
 
-    <!-- الـ Modal -->
+
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -296,17 +296,17 @@ input.hoursInput {
     </div>
 
     <script>
-// إظهار النافذة المنبثقة
+
 function openModal() {
             document.getElementById("myModal").style.display = "block";
         }
 
-        // إغلاق النافذة
+        
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
         }
 
-        // إرسال البيانات إلى Google Sheets
+     
         function sendData() {
     var matricule = document.getElementById("matricule").value;
     var nombre = document.getElementById("nombre").value;
