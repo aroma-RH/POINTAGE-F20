@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pointage Campo</title>
+    <title>Pointage des Travailleurs</title>
   
 
 
@@ -127,12 +127,16 @@ th {
     background-color: #007bff;
     color: white;
     font-weight: 600;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 td {
     background-color: #f9f9f9;
     font-size: 14px;
     color: #333;
+    padding-top: 5px;
+        padding-bottom: 5px;
 }
 
 td input {
@@ -173,7 +177,9 @@ tr.selected {
     }
 
     table th, table td {
-        padding: 12px;
+        
+        margin-top: 5px;
+        margin-bottom: 5px;
         font-size: 14px;
         font-weight: bold;
     }
@@ -271,7 +277,7 @@ input.hoursInput {
     </style>
 </head>
 <body>
-    <input type="text" id="finca" value="FINCA 22" style="display: none;">
+    <input type="text" id="finca" value="FINCA 20" style="display: none;">
 
 
 
@@ -296,7 +302,7 @@ input.hoursInput {
             <input type="text" id="nombre" placeholder="NOMBRE">
             <input type="text" id="equipe" placeholder="EQUIPE">
             <input type="text" id="hours" placeholder="HOURS">
-            <input type="text" id="finca" value="FINCA 22" style="display: none;"> 
+            <input type="text" id="finca" value="FINCA 20" style="display: none;"> 
             <button class="DB" onclick="sendData()">Envoyer</button>
         </div>
         
