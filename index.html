@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pointage des Travailleurs</title>
+    <title>Pointage</title>
   
 
 
@@ -295,7 +295,7 @@ input.hoursInput {
             <input type="text" id="nombre" placeholder="NOMBRE">
             <input type="text" id="equipe" placeholder="EQUIPE">
             <input type="text" id="hours" placeholder="HOURS">
-            <input type="text" id="finca" value="FINCA 22" style="display: none;"> <!-- حقل غير قابل للتعديل -->
+            <input type="text" id="finca" value="FINCA 22" style="display: none;"> 
             <button class="DB" onclick="sendData()">Envoyer</button>
         </div>
         
@@ -379,7 +379,7 @@ async function fetchGroups() {
         const sortedGroups = Object.keys(data).sort();
 
         const select = document.getElementById("groupSelect");
-        select.innerHTML = '<option value="">Sélectionnez un groupe</option>';
+        select.innerHTML = '<option value="">Sélectionnez Equipe</option>';
         sortedGroups.forEach(group => {
             const option = document.createElement("option");
             option.value = group;
