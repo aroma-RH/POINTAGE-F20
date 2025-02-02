@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pointage des Travailleurs</title>
+    <title>Pointage Campo</title>
   
 
 
@@ -45,6 +45,7 @@ select {
     transition: all 0.3s ease;
     cursor: pointer;
     font-weight: bold;
+    width: 100%;
 }
 
 select:focus, button:focus {
@@ -62,7 +63,8 @@ select:hover, button:hover {
 button {
     background-color: #4a90e2;
     color: white;
-    margin: 2px;
+    margin: 5px;
+    
     padding: 12px;
     font-size: 25px;
     border: none;
@@ -75,8 +77,8 @@ button {
 }
 
 button:hover {
-    background-color: #357ABD; /* لون أغمق عند التمرير */
-    transform: scale(1.05); /* تكبير بسيط عند التمرير */
+    background-color: #357ABD;
+    transform: scale(1.05);
 }
 
 
@@ -90,7 +92,7 @@ button:disabled {
         margin-top: 5px;
         display: flex;
         align-items: center;
-        gap: 10px; /* تباعد بين العناصر */
+        gap: 10px; 
         font-size: 20px;
         font-weight: bold;
         background-color: #2b445f;
@@ -261,7 +263,7 @@ input.hoursInput {
             position: absolute;
             top: 10px;
             right: 15px;
-            font-size: 20px;
+            font-size: 40px;
             cursor: pointer;
         }
 
@@ -459,21 +461,20 @@ function displayMembers(group) {
 
 function updateRowSelection(row, selected) {
     const hoursInput = row.querySelector(".hoursInput");
-    const codeCell = row.querySelector(".clickable"); // Assuming the first .clickable contains the code
+    const codeCell = row.querySelector(".clickable"); 
 
     if (!hoursInput || !codeCell) return;
 
-    const codeValue = codeCell.textContent.trim(); // Get the code text
+    const codeValue = codeCell.textContent.trim(); 
 
-    // Define an array of codes that should set the input to 12
+    // VARIABLE S7AB SWAYE3
     const h12 = ["4116"];
-    const h9 = ["30609", "58451", "44943", "41294" /* Add more codes here */];
+    const h9 = ["30609", "58451", "44943", "41294"];
     const h10 = ["45894", "15062"];
 
     if (selected) {
         row.classList.add("selected");
 
-        // Check if codeValue exists in specialCodes array
         if (h12.includes(codeValue)) {
             hoursInput.value = 12;
             
