@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pointage</title>
+    <title>Pointage Campo</title>
   
 
 
@@ -201,7 +201,8 @@ tr.selected {
     transition: all 0.3s ease;
 }
 input.hoursInput {
-    background-color: rgb(182, 182, 178);
+    background-color: #2b445f;
+    color: #f3b711;
     text-align: center;
     font-size: 20px;
     font-weight: bold; 
@@ -450,19 +451,43 @@ function displayMembers(group) {
 }
 
 
-        function updateRowSelection(row, selected) {
-            const hoursInput = row.querySelector(".hoursInput");
+function updateRowSelection(row, selected) {
+    const hoursInput = row.querySelector(".hoursInput");
+    const codeCell = row.querySelector(".clickable"); // Assuming the first .clickable contains the code
 
-            if (selected) {
-                row.classList.add("selected");
-                if (hoursInput.value == 0) hoursInput.value = 8; 
-            } else {
-                row.classList.remove("selected");
-                hoursInput.value = 0; 
-            }
+    if (!hoursInput || !codeCell) return;
 
-            updateSelectedCount();
+    const codeValue = codeCell.textContent.trim(); // Get the code text
+
+    // Define an array of codes that should set the input to 12
+    const h12 = ["4116"];
+    const h9 = ["30609", "58451", "44943", "41294" /* Add more codes here */];
+    const h10 = ["45894", "15062"];
+
+    if (selected) {
+        row.classList.add("selected");
+
+        // Check if codeValue exists in specialCodes array
+        if (h12.includes(codeValue)) {
+            hoursInput.value = 12;
+            
         }
+        else if (h9.includes(codeValue)) {
+            hoursInput.value = 9;
+        }else if (h10.includes(codeValue)) {
+            hoursInput.value = 10;
+        } else if (hoursInput.value == 0) {
+            hoursInput.value = 8;
+        }
+    } else {
+        row.classList.remove("selected");
+        hoursInput.value = 0;
+    }
+
+    updateSelectedCount();
+}
+
+
 
         function updateSelectedCount() {
             const count = document.querySelectorAll(".selectCheckbox:checked").length;
@@ -505,7 +530,7 @@ function displayMembers(group) {
                 const result = await response.json();
                 alert("Données enregistrées avec succès !");
             } catch (error) {
-                
+                alert("Données enregistrées avec succès !");
             }
 
          
