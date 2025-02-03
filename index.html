@@ -282,7 +282,7 @@ input.hoursInput {
     <input type="text" id="finca" value="FINCA 20" style="display: none;">
 
 
-
+    <input type="date" id="todaydate">
 <select id="groupSelect">
     <option value="">Sélectionnez Equipe</option>
 </select>
@@ -300,6 +300,7 @@ input.hoursInput {
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Ajouter Ouvrier</h2>
+            <input type="date" id="todaydate1">
             <input type="number" id="matricule" placeholder="MATRICULE">
             <input type="text" id="nombre" placeholder="NOMBRE">
             <input type="text" id="equipe" placeholder="EQUIPE">
@@ -311,6 +312,15 @@ input.hoursInput {
     </div>
 
     <script>
+        let today = new Date().toISOString().split('T')[0];
+
+
+      document.getElementById('todaydate').value = today;
+      document.getElementById('todaydate1').value = today;
+
+ 
+
+
 
 function openModal() {
             document.getElementById("myModal").style.display = "block";
@@ -328,6 +338,7 @@ function openModal() {
     var equipe = document.getElementById("equipe").value;
     var hours = document.getElementById("hours").value;
     var finca = document.getElementById("finca").value;
+    var todaydate1 = document.getElementById("todaydate1").value;
 
     if (matricule === "" || nombre === "" || equipe === "" || hours === "") {
         alert("Veuillez remplir tous les champs !");
@@ -339,10 +350,12 @@ function openModal() {
         nombre: nombre,
         equipe: equipe,
         hours: hours,
+        hours: hours,
+        todaydate1: todaydate1,
         finca: finca
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbwHo1U-v9gtsTMscA7MUCxgiBm0iz_vz6NYMn_Jna2eVr6mYxTgSVHwA7GnRt7-gIm8ig/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbzc40u7FBeYISqVRxoNmyuFjnM-38JrpE49e1_VNUcjBgHhTVoSS6usXJ5X3Dli9YL8RA/exec", {
     method: "POST",
     mode: "no-cors",
     headers: { "Content-Type": "application/json" },
@@ -351,6 +364,7 @@ function openModal() {
         nombre: document.getElementById("nombre").value,
         equipe: document.getElementById("equipe").value,
         hours: document.getElementById("hours").value,
+        todaydate1 : document.getElementById("todaydate1").value,
         finca: document.getElementById("finca").value
     })
 })
@@ -358,11 +372,6 @@ function openModal() {
 .catch(error => alert("Erreur lors de l'envoi des données !"));
 
 }
-
-
-
-
-
 
        let allSelected = false; 
 
@@ -379,7 +388,7 @@ function toggleSelectAll() {
 }
 
 async function fetchGroups() {
-    const url = "https://script.google.com/macros/s/AKfycbylEffo1sUDfK4TjMT7zI9JPEoC90eblAZV5jwemk391QrM1JrdMiFD-10mxMxWrWBz2A/exec";
+    const url = "https://script.google.com/macros/s/AKfycbzcjVGKU3KqPEA-A_35bvIC6mEHJVHr1dwoZQ9_cd85_-jeGzTGHKTh-154wQpRX6NApw/exec";
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -517,7 +526,8 @@ function updateRowSelection(row, selected) {
                     const name = row.cells[2].textContent;
                     const hours = row.querySelector(".hoursInput").value;
                     const fin = document.getElementById("finca").value;
-                    dataToSend.push({ code, name, group: selectedGroup, hours, fin }); 
+                    const todaydate = document.getElementById("todaydate").value;
+                    dataToSend.push({ code, name, group: selectedGroup, hours, todaydate, fin }); 
                 }
             });
 
@@ -526,7 +536,7 @@ function updateRowSelection(row, selected) {
                 return;
             }
 
-            const url = "https://script.google.com/macros/s/AKfycbylEffo1sUDfK4TjMT7zI9JPEoC90eblAZV5jwemk391QrM1JrdMiFD-10mxMxWrWBz2A/exec";
+            const url = "https://script.google.com/macros/s/AKfycbzepFi12NAzSQYScWN0QEZgDYrtZVmLKz4tVbfrHU1iWx9hvb6pkLeKnuANZcfQUGH-3Q/exec";
             try {
                 const response = await fetch(url, {
                     method: "POST",
