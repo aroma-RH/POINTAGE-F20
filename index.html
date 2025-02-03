@@ -63,7 +63,7 @@ select:hover, button:hover {
 button {
     background-color: #4a90e2;
     color: white;
-    margin: 5px;
+    margin: 1px;
     
     padding: 12px;
     font-size: 25px;
@@ -287,7 +287,9 @@ input.hoursInput {
     <option value="">Sélectionnez Equipe</option>
 </select>
 
-<p class="summary"><span id="selectedCount">0</span> Ouvriers<button onclick="saveData()">Envoyer</button> <button onclick="toggleSelectAll()"> tout</button> <button class="plus-button" onclick="openModal()">+</button></p>
+<p class="summary"><span id="selectedCount">0</span> Ouvriers<button onclick="saveData()">Envoyer</button> <button onclick="toggleSelectAll()"> tout</button> <button class="plus-button" onclick="openModal()">+</button><a href="https://github.com/aroma-RH/F02DSFQDSCVXSDGDFDFDFDFDFCV/blob/main/index.html">
+    <button class="plus-button" >P</button>
+</a></p>
 
 <table>
     
@@ -304,7 +306,7 @@ input.hoursInput {
             <input type="number" id="matricule" placeholder="MATRICULE">
             <input type="text" id="nombre" placeholder="NOMBRE">
             <input type="text" id="equipe" placeholder="EQUIPE">
-            <input type="text" id="hours" placeholder="HOURS">
+            <input type="number" id="hours" placeholder="HOURS">
             <input type="text" id="finca" value="FINCA 20" style="display: none;"> 
             <button class="DB" onclick="sendData()">Envoyer</button>
         </div>
@@ -340,7 +342,7 @@ function openModal() {
     var finca = document.getElementById("finca").value;
     var todaydate1 = document.getElementById("todaydate1").value;
 
-    if (matricule === "" || nombre === "" || equipe === "" || hours === "") {
+    if (nombre === "" || equipe === "" || hours === "") {
         alert("Veuillez remplir tous les champs !");
         return;
     }
@@ -388,7 +390,7 @@ function toggleSelectAll() {
 }
 
 async function fetchGroups() {
-    const url = "https://script.google.com/macros/s/AKfycbzcjVGKU3KqPEA-A_35bvIC6mEHJVHr1dwoZQ9_cd85_-jeGzTGHKTh-154wQpRX6NApw/exec";
+    const url = "https://script.google.com/macros/s/AKfycbzepFi12NAzSQYScWN0QEZgDYrtZVmLKz4tVbfrHU1iWx9hvb6pkLeKnuANZcfQUGH-3Q/exec";
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -477,9 +479,9 @@ function updateRowSelection(row, selected) {
     const codeValue = codeCell.textContent.trim(); 
 
     // VARIABLE S7AB SWAYE3
-    const h12 = ["4116"];
-    const h9 = ["30609", "58451", "44943", "41294"];
-    const h10 = ["45894", "15062"];
+    const h12 = ["4116", "456", "1648" ,"4029" ];
+    const h9 = ["7416", "12419", "19939", "26730", "27399", "30609", "37079", "38774", "41294", "44943", "28679", "58451"];
+    const h10 = ["4236", "7694", "13536", "15062","23825", "28541", "29730", "48337", "41371"];
 
     if (selected) {
         row.classList.add("selected");
