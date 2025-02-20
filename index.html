@@ -415,7 +415,7 @@ input.hoursInput {
             <input type="text" id="equipe" placeholder="EQUIPE">
             <input type="number" id="hours" placeholder="HOURS">
             <input type="text" id="finca" value="FINCA 20" style="display: none;"> 
-            <button class="DB" onclick="OPED()">Envoyer</button>
+            <button class="DB" onclick="sendData()">Envoyer</button>
         </div>
         
     </div>
@@ -427,7 +427,7 @@ input.hoursInput {
             <h2>Êtes-vous sûr de vouloir envoyer le pointage ?</h2>
             <p class="modal-description">Cette action est irréversible. Veuillez confirmer pour envoyer le pointage.</p>
             <div class="modal-buttons">
-                <button class="confirm-btn" onclick="sendData()">Confirmer</button>
+                <button class="confirm-btn" onclick="saveData()">Confirmer</button>
                 <button class="cancel-btn" onclick="closeConfirmationModal()">Annuler</button>
             </div>
         </div>
