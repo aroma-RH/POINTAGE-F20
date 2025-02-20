@@ -691,6 +691,7 @@ function closeConfirmationModal() {
                 checkbox.checked = false;
                 updateRowSelection(checkbox.closest("tr"), false);
             });
+            closeConfirmationModal();
         }
 
 
