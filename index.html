@@ -425,10 +425,9 @@ input.hoursInput {
         <span class="close" onclick="closeConfirmationModal()">&times;</span>
         <div class="modal-body">
             <h2>Êtes-vous sûr de vouloir envoyer le pointage ?</h2>
-            <p class="modal-description">Cette action est irréversible. Veuillez confirmer pour envoyer le pointage.</p>
             <div class="modal-buttons">
-                <button class="confirm-btn" onclick="saveData()">Confirmer</button>
-                <button class="cancel-btn" onclick="closeConfirmationModal()">Annuler</button>
+                <button class="confirm-btn" onclick="saveData()">OUI</button>
+                <button class="cancel-btn" onclick="closeConfirmationModal()">NON</button>
             </div>
         </div>
     </div>
@@ -606,8 +605,8 @@ function updateRowSelection(row, selected) {
 
     // VARIABLE S7AB SWAYE3
     const h12 = ["4116", "456", "1648" ,"4029" ];
-    const h9 = ["7416", "12419", "19939", "26730", "27399", "30609", "37079", "38774", "41294", "44943", "28679", "58451"];
-    const h10 = ["4236", "7694", "13536", "15062","23825", "28541", "29730", "48337", "41371"];
+    const h9 = ["7416", "12419", "19939", "26730", "27399", "30609", "37079", "40183", "38774", "41294", "44943", "28679", "58451"];
+    const h10 = ["4236", "7694", "13536", "15062","23825", "28541", "29730", "45894", "48337", "41371"];
 
     if (selected) {
         row.classList.add("selected");
